@@ -19,100 +19,68 @@ lengthSlider.addEventListener("input", () => {
   lengthDisplay.textContent = lengthSlider.value;
 });
 
-generateButton.addEventListener("click", makePassword);
+generateButton.addEventListener("click", generatePassword);
 
-function makePassword() {
+function generatePassword() {
   const length = Number(lengthSlider.value);
-  const includeUppercase = uppercaseCheckbox.checked;
-  const includeLowercase = lowercaseCheckbox.checked;
-  const includeNumbers = numbersCheckbox.checked;
-  const includeSymbols = symbolsCheckbox.checked;
+  const upper = uppercaseCheckbox.checked;
+  const lower = lowercaseCheckbox.checked;
+  const num = numbersCheckbox.checked;
+  const sym = symbolsCheckbox.checked;
 
-  if (!includeUppercase && !includeLowercase && !includeNumbers && !includeSymbols) {
-    alert("请至少选择一种字符类型！");
+  if (!upper && !lower && !num && !sym) {
+    alert("Please select at least one character type!");
     return;
   }
 
-  const newPassword = createRandomPassword(
-    length,
-    includeUppercase,
-    includeLowercase,
-    includeNumbers,
-    includeSymbols
-  );
-
-  passwordInput.value = newPassword;
-  updateStrengthMeter(newPassword);
-}
-
-function createRandomPassword(length, upper, lower, nums, syms) {
-  let allChars = "";
-  if (upper) allChars += uppercaseLetters;
-  if (lower) allChars += lowercaseLetters;
-  if (nums) allChars += numberCharacters;
-  if (syms) allChars += symbolCharacters;
+  let pool = "";
+  if (upper) pool += uppercaseLetters;
+  if (lower) pool += lowercaseLetters;
+  if (num) pool += numberCharacters;
+  if (sym) pool += symbolCharacters;
 
   let password = "";
   for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * allChars.length);
-    password += allChars[randomIndex];
+    password += pool[Math.floor(Math.random() * pool.length)];
   }
-  return password;
+
+  passwordInput.value = password;
+  updateStrength(password);
 }
 
-function updateStrengthMeter(password) {
-  const len = password.length;
-  const hasUpper = /[A-Z]/.test(password);
-  const hasLower = /[a-z]/.test(password);
-  const hasNum = /[0-9]/.test(password);
-  const hasSym = /[!@#$%^&*()-_=+\[\]{}|;:,.<>?]/.test(password);
-
+function updateStrength(password) {
   let score = 0;
-  score += Math.min(len * 2, 40);
-  if (hasUpper) score += 15;
-  if (hasLower) score += 15;
-  if (hasNum) score += 15;
-  if (hasSym) score += 15;
-  if (len < 8) score = Math.min(score, 40);
+  if (/[A-Z]/.test(password)) score += 1;
+  if (/[a-z]/.test(password)) score += 1;
+  if (/[0-9]/.test(password)) score += 1;
+  if (/[!@#$%^&*()-_=+\[\]{}|;:,.<>?/]/.test(password)) score += 1;
+  if (password.length >= 8) score += 1;
 
-  const safeScore = Math.max(5, Math.min(100, score));
-  strengthBar.style.width = safeScore + "%";
+  let percent = (score / 5) * 100;
+  strengthBar.style.width = percent + "%";
 
-  let text = "";
-  let color = "";
-  if (score < 40) {
-    color = "#fc8181";
-    text = "弱";
-  } else if (score < 70) {
-    color = "#fbd38d";
-    text = "中";
+  if (percent < 40) {
+    strengthBar.style.backgroundColor = "#f87171"; // red
+    strengthLabel.textContent = "Weak";
+  } else if (percent < 80) {
+    strengthBar.style.backgroundColor = "#fcd34d"; // yellow
+    strengthLabel.textContent = "Medium";
   } else {
-    color = "#68d391";
-    text = "强";
+    strengthBar.style.backgroundColor = "#34d399"; // green
+    strengthLabel.textContent = "Strong";
   }
-
-  strengthBar.style.backgroundColor = color;
-  strengthLabel.textContent = text;
 }
 
-window.addEventListener("DOMContentLoaded", makePassword);
-
+// Copy to clipboard
 copyButton.addEventListener("click", () => {
   if (!passwordInput.value) return;
-  navigator.clipboard
-    .writeText(passwordInput.value)
-    .then(() => showCopySuccess())
-    .catch((err) => console.error("无法复制:", err));
+  navigator.clipboard.writeText(passwordInput.value).then(() => {
+    copyButton.innerHTML = '<i class="fas fa-check"></i>';
+    setTimeout(() => {
+      copyButton.innerHTML = '<i class="far fa-clipboard"></i>';
+    }, 1200);
+  });
 });
 
-function showCopySuccess() {
-  copyButton.classList.remove("far", "fa-copy");
-  copyButton.classList.add("fas", "fa-check");
-  copyButton.style.color = "#48bb78";
-
-  setTimeout(() => {
-    copyButton.classList.remove("fas", "fa-check");
-    copyButton.classList.add("far", "fa-copy");
-    copyButton.style.color = "";
-  }, 1500);
-}
+// Initial generate
+window.addEventListener("DOMContentLoaded", generatePassword);

@@ -1,42 +1,39 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>密码生成器</title>
-
-  <!-- 本地样式 -->
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
-  <link rel="stylesheet" href="assets/css/solid.min.css" />
-  <link rel="stylesheet" href="assets/css/regular.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Generator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="container">
-    <h1>密码生成器</h1>
+  <div class="card">
+    <h1>Password Generator</h1>
 
     <div class="password-box">
-      <input type="text" id="password" readonly />
-      <button id="copy-btn" class="far fa-copy"></button>
+      <input type="text" id="password" readonly placeholder="Click generate">
+      <button id="copy-btn"><i class="far fa-clipboard"></i></button>
     </div>
 
     <div class="options">
-      <label>长度：
+      <div class="option">
+        <label>Password Length</label>
+        <input type="range" id="length" min="4" max="32" value="12">
         <span id="length-value">12</span>
-      </label>
-      <input type="range" id="length" min="4" max="32" value="12" />
-
-      <label><input type="checkbox" id="uppercase" checked /> 大写字母</label>
-      <label><input type="checkbox" id="lowercase" checked /> 小写字母</label>
-      <label><input type="checkbox" id="numbers" checked /> 数字</label>
-      <label><input type="checkbox" id="symbols" /> 符号</label>
+      </div>
+      <label><input type="checkbox" id="uppercase" checked> Include Uppercase</label>
+      <label><input type="checkbox" id="lowercase" checked> Include Lowercase</label>
+      <label><input type="checkbox" id="numbers" checked> Include Numbers</label>
+      <label><input type="checkbox" id="symbols" checked> Include Symbols</label>
     </div>
 
-    <button id="generate-btn">生成密码</button>
+
+    <button id="generate-btn"><i class="fas fa-key"></i> Generate Password</button>
 
     <div class="strength-container">
-      <p>密码强度：<span id="strength-label">Medium</span></p>
+      <span>Password Strength:</span>
+      <span id="strength-label">Medium</span>
       <div class="strength-bar-container">
         <div class="strength-bar"></div>
       </div>
