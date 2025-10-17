@@ -89,7 +89,13 @@ function updateStrength(password) {
   }
 }
 
+
 generateBtn.addEventListener('click', () => {
+  // 检查所有勾选框是否都未勾选
+  if (!uppercaseCheckbox.checked && !lowercaseCheckbox.checked && !numbersCheckbox.checked && !symbolsCheckbox.checked) {
+    alert('Please select at least one char type.”。');
+    return;
+  }
   const pwd = generatePassword();
   passwordInput.value = pwd;
   updateStrength(pwd);
