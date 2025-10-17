@@ -1,0 +1,118 @@
+
+body {
+  font-family: "Microsoft YaHei", sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #fff;
+  margin: 0;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  width: 350px;
+  text-align: center;
+  position: relative;
+}
+
+h1 {
+  position: relative;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+h1::after {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 60px;
+  margin: 0.5rem auto 0;
+  background: linear-gradient(90deg, #fbd38d, #68d391);
+  border-radius: 2px;
+}
+
+
+.password-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#password {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+#copy-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #333;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+label {
+  font-size: 0.95rem;
+}
+
+#generate-btn {
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border: none;
+  color: white;
+  padding: 10px 0;
+  width: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+#generate-btn:hover {
+  transform: scale(1.05);
+}
+
+.strength-container {
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.strength-bar-container {
+  background: rgba(255, 255, 255, 0.3);
+  height: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.strength-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #fbd38d;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
